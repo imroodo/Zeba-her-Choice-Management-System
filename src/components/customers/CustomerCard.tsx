@@ -15,23 +15,23 @@ export default function CustomerCard({ customer, onEdit, onDelete }: CustomerCar
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group">
-      <div className="flex justify-between items-start mb-3">
-        <div className="flex-1">
-          <h3 className="font-semibold text-gray-900 text-lg group-hover:text-rose-600  transition-colors">
+    <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group active:scale-[0.98] min-h-[180px] flex flex-col">
+      <div className="flex justify-between items-start mb-3 gap-2 flex-1">
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-gray-900 text-base lg:text-lg group-hover:text-rose-600 transition-colors truncate">
             {customer.name}
           </h3>
-          <p className="text-gray-900 text-sm mt-1 flex items-center gap-1">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <p className="text-gray-900 text-xs lg:text-sm mt-1 flex items-center gap-1.5">
+            <svg className="w-3.5 h-3.5 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            {customer.phone}
+            <span className="truncate">{customer.phone}</span>
           </p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={handleView}
-            className="p-2 text-gray-900 hover:text-rose-600 hover:bg-rose-50 hover:bg-rose-50 rounded-lg transition-all duration-200"
+            className="p-2.5 text-gray-900 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
             title="View Details"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,7 +41,7 @@ export default function CustomerCard({ customer, onEdit, onDelete }: CustomerCar
           </button>
           <button
             onClick={() => onEdit(customer.id)}
-            className="p-2 text-gray-900 hover:text-blue-600 hover:bg-blue-50 hover:bg-blue-50 rounded-lg transition-all duration-200"
+            className="p-2.5 text-gray-900 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
             title="Edit"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,7 +50,7 @@ export default function CustomerCard({ customer, onEdit, onDelete }: CustomerCar
           </button>
           <button
             onClick={() => onDelete(customer.id)}
-            className="p-2 text-gray-900 hover:text-red-600 hover:bg-red-50 hover:bg-red-50 rounded-lg transition-all duration-200"
+            className="p-2.5 text-gray-900 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
             title="Delete"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,8 +60,8 @@ export default function CustomerCard({ customer, onEdit, onDelete }: CustomerCar
         </div>
       </div>
       {customer.address && (
-        <p className="text-gray-600 text-gray-900 text-sm mb-2 flex items-start gap-1">
-          <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <p className="text-gray-600 text-gray-900 text-xs lg:text-sm mb-2 flex items-start gap-1">
+          <svg className="w-3 h-3 mt-0.5 flex-shrink-0 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
@@ -69,9 +69,9 @@ export default function CustomerCard({ customer, onEdit, onDelete }: CustomerCar
         </p>
       )}
       {customer.notes && (
-        <p className="text-gray-900 text-sm italic truncate bg-gray-50 bg-gray-50/50 p-2 rounded-lg">"{customer.notes}"</p>
+        <p className="text-gray-900 text-xs lg:text-sm italic truncate bg-gray-50/50 p-2 rounded-lg">"{customer.notes}"</p>
       )}
-      <div className="mt-3 pt-3 border-t border-gray-100 border-gray-200 text-xs text-gray-900 flex items-center gap-1">
+      <div className="mt-2 lg:mt-3 pt-2 lg:pt-3 border-t border-gray-100 border-gray-200 text-xs text-gray-900 flex items-center gap-1">
         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>

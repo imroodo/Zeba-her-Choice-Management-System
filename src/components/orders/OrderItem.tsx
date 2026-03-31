@@ -81,7 +81,7 @@ export default function OrderItem({
             variant="ghost"
             size="sm"
             onClick={onRemove}
-            className="text-red-600 hover:text-red-700"
+            className="text-red-600 hover:text-red-700 min-h-[44px] px-3"
           >
             Remove
           </Button>
@@ -147,10 +147,10 @@ export default function OrderItem({
                     Enter all measurements manually or load from saved.
                   </p>
 
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-3">
                     {MEASUREMENT_FIELDS.map(field => (
                       <div key={field.key}>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">
+                        <label className="block text-xs font-medium text-gray-600 mb-1 truncate">
                           {field.label} *
                         </label>
                         <input

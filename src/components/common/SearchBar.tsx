@@ -31,7 +31,7 @@ export default function SearchBar({ onSearch, placeholder = 'Search...' }: Searc
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
-        className="w-full px-4 py-2 pl-10 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+        className="w-full px-4 py-2.5 pl-10 min-h-[44px] border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
       />
       <svg
         className="absolute left-3 top-2.5 w-5 h-5 text-gray-400"

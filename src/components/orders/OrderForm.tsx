@@ -228,6 +228,7 @@ export default function OrderForm() {
               variant="secondary"
               size="sm"
               onClick={() => setShowCustomerSelector(true)}
+              className="w-full sm:w-auto"
             >
               Change Customer
             </Button>
@@ -341,17 +342,19 @@ export default function OrderForm() {
           </div>
         </div>
 
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-3">
           <Button
             type="button"
             variant="secondary"
             onClick={() => navigate(`/customers/${selectedCustomerId}`)}
+            className="w-full sm:w-auto"
           >
             Cancel
           </Button>
           <Button
             type="submit"
             disabled={isSubmitting || items.length === 0 || total < 1}
+            className="w-full sm:w-auto"
           >
             {isSubmitting ? 'Creating...' : 'Create Order'}
           </Button>

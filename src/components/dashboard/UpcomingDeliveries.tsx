@@ -1,9 +1,11 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useOrders, useCustomers } from '../../hooks';
 import { formatDate } from '../../utils/helpers';
 import Button from '../common/Button';
 
 export default function UpcomingDeliveries() {
+  const navigate = useNavigate();
   const { orders } = useOrders();
   const { customers } = useCustomers();
 
@@ -78,7 +80,7 @@ export default function UpcomingDeliveries() {
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 animate-slide-up" style={{ animationDelay: '0.4s' }}>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-900">Upcoming Deliveries</h3>
-        <Button variant="secondary" size="sm" onClick={() => window.location.href = '/customers'}>
+        <Button variant="secondary" size="sm" onClick={() => navigate('/customers')} className="w-full sm:w-auto">
           View All
         </Button>
       </div>
@@ -91,8 +93,8 @@ export default function UpcomingDeliveries() {
           return (
             <div
               key={order.id}
-              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all cursor-pointer"
-              onClick={() => window.location.href = `/billing/${order.id}`}
+              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all cursor-pointer min-h-[100px]"
+              onClick={() => navigate(`/billing/${order.id}`)}
             >
               <div className="flex justify-between items-start mb-2">
                 <div>

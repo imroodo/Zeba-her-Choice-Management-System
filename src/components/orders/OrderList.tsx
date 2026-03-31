@@ -26,7 +26,7 @@ export default function OrderList({ orders, onView, onCreateNew }: OrderListProp
     <div className="space-y-4">
       {onCreateNew && (
         <div className="flex justify-end mb-4">
-          <Button onClick={onCreateNew}>Create New Order</Button>
+          <Button onClick={onCreateNew} className="w-full sm:w-auto">Create New Order</Button>
         </div>
       )}
 

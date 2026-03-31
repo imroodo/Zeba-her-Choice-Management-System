@@ -28,12 +28,14 @@ export default function CustomerList({ customers, onEdit, onDelete }: CustomerLi
   return (
     <div className="p-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-        <SearchBar
-          onSearch={setSearchQuery}
-          placeholder="Search customers by name or phone..."
-        />
-        <Link to="/customers/new">
-          <Button>
+        <div className="w-full sm:flex-1 sm:max-w-md">
+          <SearchBar
+            onSearch={setSearchQuery}
+            placeholder="Search customers by name or phone..."
+          />
+        </div>
+        <Link to="/customers/new" className="w-full sm:w-auto">
+          <Button className="w-full sm:w-auto">
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>

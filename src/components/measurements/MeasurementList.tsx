@@ -40,9 +40,9 @@ export default function MeasurementList({
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
         <p className="text-gray-600">{measurements.length} measurement(s) saved</p>
-        <Button onClick={onAdd} size="sm">
+        <Button onClick={onAdd} size="sm" className="w-full sm:w-auto">
           Add Measurement
         </Button>
       </div>

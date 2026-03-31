@@ -98,14 +98,14 @@ export default function InvoicePage() {
           )}
         </div>
 
-        <div className="p-6">
-          <table className="w-full">
+        <div className="p-6 overflow-x-auto -mx-6 -mt-6">
+          <table className="w-full min-w-[640px]">
             <thead>
               <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-2 text-sm font-semibold text-gray-700 text-gray-900">
+                <th className="text-left py-3 px-2 text-sm font-semibold text-gray-900 whitespace-nowrap">
                   Item / Description
                 </th>
-                <th className="text-right py-3 px-2 text-sm font-semibold text-gray-700 text-gray-900">
+                <th className="text-right py-3 px-2 text-sm font-semibold text-gray-900 whitespace-nowrap">
                   Amount
                 </th>
               </tr>
@@ -229,18 +229,21 @@ export default function InvoicePage() {
         </div>
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-3">
         <Button
           variant="secondary"
           onClick={() => navigate(`/customers/${customer.id}`)}
+          className="w-full sm:w-auto"
         >
           ← Back to Customer
         </Button>
-        <div className="flex gap-2">
-          <Button variant="secondary" onClick={() => window.print()}>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="secondary" onClick={() => window.print()} className="flex-1 sm:flex-initial">
             Print Invoice
           </Button>
-          <Button onClick={() => navigate('/orders/new')}>Create New Order</Button>
+          <Button onClick={() => navigate('/orders/new')} className="flex-1 sm:flex-initial">
+            Create New Order
+          </Button>
         </div>
       </div>
     </div>

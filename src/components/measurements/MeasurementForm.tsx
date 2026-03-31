@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { supabase } from '../../lib/supabase';
 import { useMeasurements } from '../../hooks';
 import type { Measurement } from '../../types';
 import { DRESS_TYPES, MEASUREMENT_FIELDS } from '../../utils/constants';
@@ -9,33 +10,67 @@ import { validateMeasurement } from '../../utils/validators';
 export default function MeasurementForm() {
   const navigate = useNavigate();
   const { customerId: customerIdParam, id } = useParams<{ customerId: string; id: string }>();
-  const { getMeasurement, addMeasurement, updateMeasurement } = useMeasurements();
+  const { addMeasurement, updateMeasurement } = useMeasurements();
 
-  const existingMeasurement = id ? getMeasurement(id) : null;
-  const customerId = customerIdParam || existingMeasurement?.customerId || '';
-
-  const [formData, setFormData] = useState<Partial<Measurement>>(() => {
-    if (existingMeasurement) {
-      return { ...existingMeasurement };
-    }
-    return {
-      dressType: 'Blouse',
-      length: 1,
-      shoulder: 1,
-      sleeveLength: 1,
-      armHole: 1,
-      chest: 1,
-      waist: 1,
-      hip: 1,
-      frontNeck: 1,
-      backNeck: 1,
-      bottom: 1,
-      bottomHip: 1,
-    };
-  });
-
+  const [formData, setFormData] = useState<Partial<Measurement>>(() => ({
+    dressType: 'Blouse',
+    length: 0,
+    shoulder: 0,
+    sleeveLength: 0,
+    sleeveLoose: 0,
+    armHole: 0,
+    chest: 0,
+    waist: 0,
+    hip: 0,
+    frontNeck: 0,
+    backNeck: 0,
+    bottom: 0,
+    bottomHip: 0,
+  }));
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(!!id);
+
+  // Fetch measurement data directly from database when editing
+  useEffect(() => {
+    if (id) {
+      const fetchMeasurement = async () => {
+        try {
+          const { data, error } = await supabase
+            .from('measurements')
+            .select('*')
+            .eq('id', id)
+            .single();
+
+          if (error) throw error;
+          if (data) {
+            setFormData({
+              dressType: data.dress_type,
+              length: data.length || 0,
+              shoulder: data.shoulder || 0,
+              sleeveLength: data.sleeve_length || 0,
+              sleeveLoose: data.sleeve_loose || 0,
+              armHole: data.arm_hole || 0,
+              chest: data.chest || 0,
+              waist: data.waist || 0,
+              hip: data.hip || 0,
+              frontNeck: data.front_neck || 0,
+              backNeck: data.back_neck || 0,
+              bottom: data.bottom || 0,
+              bottomHip: data.bottom_hip || 0,
+            });
+          }
+        } catch (err) {
+          console.error('Error fetching measurement:', err);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchMeasurement();
+    }
+  }, [id]);
+
+  const customerId = customerIdParam || '';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -60,7 +95,7 @@ export default function MeasurementForm() {
 
     if (Object.keys(validationErrors).length === 0 && customerId) {
       try {
-        if (existingMeasurement && id) {
+        if (id) {
           await updateMeasurement(id, formData);
         } else {
           await addMeasurement(customerId, formData as Omit<Measurement, 'id' | 'customerId' | 'createdAt'>);
@@ -73,6 +108,16 @@ export default function MeasurementForm() {
 
     setIsSubmitting(false);
   };
+
+  if (isLoading) {
+    return (
+      <div className="p-6 max-w-3xl mx-auto">
+        <div className="text-center py-12">
+          <p className="text-gray-500">Loading measurement data...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
@@ -127,16 +172,17 @@ export default function MeasurementForm() {
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-4 border-t">
+        <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t">
           <Button
             type="button"
             variant="secondary"
             onClick={() => navigate(`/customers/${customerId}`)}
+            className="w-full sm:w-auto"
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Saving...' : existingMeasurement ? 'Update Measurement' : 'Add Measurement'}
+          <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+            {isSubmitting ? 'Saving...' : id ? 'Update Measurement' : 'Add Measurement'}
           </Button>
         </div>
       </form>
